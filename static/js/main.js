@@ -96,7 +96,7 @@ async function loginUser() {
   }
 
   try {
-    const response = await fetch("http://127.0.0.1/chankando/login.php", {
+    const response = await fetch("https://chankando-1.onrender.com/login.php", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -198,7 +198,7 @@ async function registerUser() {
   formData.append("rol", role);
 
   try {
-    const response = await fetch("http://127.0.0.1/chankando/registro.php", {
+    const response = await fetch("https://chankando-1.onrender.com/registro.php", {
       method: "POST",
       body: formData,
     });
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (userId) {
     try {
-      const response = await fetch(`http://127.0.0.1/chankando/obtener_eventos.php?usuario_id=${userId}`);
+      const response = await fetch(`https://chankando-1.onrender.com/obtener_eventos.php?usuario_id=${userId}`);
       calendarEvents = await response.json();
 
       localStorage.setItem("userEvents", JSON.stringify(calendarEvents));
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       editingEvent.setProp('color', selectedColor);
     } else {
       try {
-        const res = await fetch("http://127.0.0.1/chankando/guardar_evento.php", {
+        const res = await fetch("https://chankando-1.onrender.com/guardar_evento.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const fechaEvento = editingEvent.start;
         const esPasado = esEventoPasado(fechaEvento);
 
-        const res = await fetch("http://127.0.0.1/chankando/eliminar_evento.php", {
+        const res = await fetch("https://chankando-1.onrender.com/eliminar_evento.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ evento_id: editingEvent.id })
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const userId = localStorage.getItem("ChankandoUserID");
   if (!userId) {
     try {
-      const res = await fetch(`http://127.0.0.1/chankando/obtener_clases.php?usuario_id=${userId}`);
+      const res = await fetch(`https://chankando-1.onrender.com/obtener_clases.php?usuario_id=${userId}`);
       const data = await res.json();
       if (Array.isArray(data)) {
         classes = data;
@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Cargar clases guardadas del servidor
   try {
-    const res = await fetch(`http://127.0.0.1/chankando/obtener_clases.php?usuario_id=${userId}`);
+    const res = await fetch(`https://chankando-1.onrender.com/obtener_clases.php?usuario_id=${userId}`);
     const data = await res.json();
     if (Array.isArray(data)) {
       classes = data;
@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       try {
-        await fetch("http://127.0.0.1/chankando/guardar_clase.php", {
+        await fetch("https://chankando-1.onrender.com/guardar_clase.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ usuario_id: userId, clases: classes })
@@ -800,7 +800,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const estadoAntes = classes.length > 0 ? 'con-clases' : 'vacio';
         classes.splice(editingClassIndex, 1);
         try {
-          await fetch("http://127.0.0.1/chankando/guardar_clase.php", {
+          await fetch("https://chankando-1.onrender.com/guardar_clase.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ usuario_id: userId, clases: classes })
@@ -1983,7 +1983,7 @@ async function sincronizarEstadisticasPomodoro() {
   const fechaHoy = new Date().toISOString().split('T')[0];
 
   try {
-    const res = await fetch("http://127.0.0.1/chankando/guardar_estadisticas_pomodoro.php", {
+    const res = await fetch("https://chankando-1.onrender.com/guardar_estadisticas_pomodoro.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -2011,7 +2011,7 @@ async function cargarEstadisticas() {
   const hoy = new Date().toISOString().split("T")[0];
 
   try {
-    const res = await fetch(`http://127.0.0.1/chankando/obtener_estadisticas_pomodoro.php?usuario_id=${userId}&fecha=${hoy}`);
+    const res = await fetch(`https://chankando-1.onrender.com/obtener_estadisticas_pomodoro.php?usuario_id=${userId}&fecha=${hoy}`);
     const data = await res.json();
 
     if (data.success && data.data) {
@@ -2187,7 +2187,7 @@ function formatCreationDate(isoString) {
 async function fetchNotes() {
   if (!userId) return;
   try {
-    const res = await fetch(`http://127.0.0.1/chankando/obtener_notas.php?usuario_id=${userId}`);
+    const res = await fetch(`https://chankando-1.onrender.com/obtener_notas.php?usuario_id=${userId}`);
     const data = await res.json();
     notes = data.map(note => {
       return {
@@ -2228,7 +2228,7 @@ async function saveNoteToServer(note) {
       delete noteToSend.id;
     }
 
-    const response = await fetch("http://127.0.0.1/chankando/guardar_nota.php", {
+    const response = await fetch("https://chankando-1.onrender.com/guardar_nota.php", {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -2264,7 +2264,7 @@ async function saveNoteToServer(note) {
 
 async function deleteNoteFromServer(noteId) {
   try {
-    await fetch("http://127.0.0.1/chankando/eliminar_nota.php", {
+    await fetch("https://chankando-1.onrender.com/eliminar_nota.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nota_id: noteId })
@@ -2686,7 +2686,7 @@ document.addEventListener('DOMContentLoaded', function() {
   async function fetchTags() {
     if (!userId) return;
     try {
-      const res = await fetch(`http://127.0.0.1/chankando/obtener_etiquetas.php?usuario_id=${userId}`);
+      const res = await fetch(`https://chankando-1.onrender.com/obtener_etiquetas.php?usuario_id=${userId}`);
       const data = await res.json();
       
       customTags = data.filter(tag => !defaultTags.includes(tag));
@@ -2753,7 +2753,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('tag-save-btn').onclick = function() {
         const newTag = document.getElementById('tag-input').value.trim();
         if (newTag && !allTags.includes(newTag)) { // Cambiar la condición
-          fetch("http://127.0.0.1/chankando/guardar_etiqueta.php", {
+          fetch("https://chankando-1.onrender.com/guardar_etiqueta.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -2789,7 +2789,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1/chankando/eliminar_etiqueta.php", {
+      const res = await fetch("https://chankando-1.onrender.com/eliminar_etiqueta.php", {
           method: "POST",
           headers: { 
               "Content-Type": "application/json",
@@ -3126,7 +3126,7 @@ async function cerrarSemana() {
     const semanaAnterior = getCurrentWeekNumber(fechaSemanaAnterior);
     const anioAnterior = fechaSemanaAnterior.getFullYear();
 
-    const response = await fetch(`http://127.0.0.1/chankando/grafica_semanal.php?usuario_id=${userId}&semana=${semanaAnterior}&anio=${anioAnterior}`);
+    const response = await fetch(`https://chankando-1.onrender.com/grafica_semanal.php?usuario_id=${userId}&semana=${semanaAnterior}&anio=${anioAnterior}`);
     const result = await response.json();
 
     if (result.success && result.data) {
@@ -3141,7 +3141,7 @@ async function cerrarSemana() {
       ) / 60;
 
       const semanaDelMes = Math.min(Math.ceil(fechaSemanaAnterior.getDate() / 7), 5);
-      await fetch('http://127.0.0.1/chankando/grafica_mensual.php', {
+      await fetch('https://chankando-1.onrender.com/grafica_mensual.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -3157,7 +3157,7 @@ async function cerrarSemana() {
     }
 
     const semanaActual = getCurrentWeekNumber(hoy);
-    await fetch('http://127.0.0.1/chankando/grafica_semanal.php', {
+    await fetch('https://chankando-1.onrender.com/grafica_semanal.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -3211,7 +3211,7 @@ async function limpiarMesBackend() {
     const mes = hoy.getMonth() + 1;
     const anio = hoy.getFullYear();
 
-    const response = await fetch('http://127.0.0.1/chankando/grafica_mensual.php', {
+    const response = await fetch('https://chankando-1.onrender.com/grafica_mensual.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -3376,7 +3376,7 @@ window.agregarEstudio = async function(minutos) {
     const mes = hoy.getMonth() + 1;
 
     // 1. Guardar en gráfica semanal
-    const responseSemanal = await fetch('http://127.0.0.1/chankando/grafica_semanal.php', {
+    const responseSemanal = await fetch('https://chankando-1.onrender.com/grafica_semanal.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -3394,7 +3394,7 @@ window.agregarEstudio = async function(minutos) {
     }
 
     // 2. Guardar en gráfica mensual
-    const responseMensual = await fetch('http://127.0.0.1/chankando/grafica_mensual.php', {
+    const responseMensual = await fetch('https://chankando-1.onrender.com/grafica_mensual.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -3442,7 +3442,7 @@ async function actualizarGraficaSemanal() {
     const semana = getCurrentWeekNumber();
     const anio = new Date().getFullYear();
     
-    const response = await fetch(`http://127.0.0.1/chankando/grafica_semanal.php?usuario_id=${userId}&semana=${semana}&anio=${anio}`);
+    const response = await fetch(`https://chankando-1.onrender.com/grafica_semanal.php?usuario_id=${userId}&semana=${semana}&anio=${anio}`);
     
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
@@ -3499,7 +3499,7 @@ async function actualizarGraficaMensual() {
     
     console.log(`Consultando datos para mes: ${mes}, año: ${anio}`); // Debug
     
-    const response = await fetch(`http://127.0.0.1/chankando/grafica_mensual.php?usuario_id=${userId}&mes=${mes}&anio=${anio}`);
+    const response = await fetch(`https://chankando-1.onrender.com/grafica_mensual.php?usuario_id=${userId}&mes=${mes}&anio=${anio}`);
     
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
@@ -3835,7 +3835,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function cargarTareas() {
     try {
-      const response = await fetch(`http://127.0.0.1/chankando/obtener_tareas.php?usuario_id=${usuarioId}`);
+      const response = await fetch(`https://chankando-1.onrender.com/obtener_tareas.php?usuario_id=${usuarioId}`);
       if (!response.ok) throw new Error('Error al cargar tareas');
       
       tareas = await response.json();
@@ -3848,7 +3848,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function guardarTarea(tarea) {
     try {
-      const response = await fetch('http://127.0.0.1/chankando/guardar_tarea.php', {
+      const response = await fetch('https://chankando-1.onrender.com/guardar_tarea.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -3904,7 +3904,7 @@ document.addEventListener('DOMContentLoaded', function () {
         throw new Error('Tarea no encontrada');
       }
 
-      const response = await fetch('http://127.0.0.1/chankando/marcar_completada.php', {
+      const response = await fetch('https://chankando-1.onrender.com/marcar_completada.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -4166,7 +4166,7 @@ async function verificarSemanaPerfectaCompleta() {
     const anio = new Date().getFullYear();
         
     // Obtener datos actualizados del backend
-    const response = await fetch(`http://127.0.0.1/chankando/grafica_semanal.php?usuario_id=${userId}&semana=${semana}&anio=${anio}`);
+    const response = await fetch(`https://chankando-1.onrender.com/grafica_semanal.php?usuario_id=${userId}&semana=${semana}&anio=${anio}`);
         
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
@@ -4216,7 +4216,7 @@ async function otorgarLogroSemanaPerfecta() {
         
     if (cumpleRequisitos) {
       // Otorgar el logro
-      const response = await fetch('http://127.0.0.1/chankando/otorgar_logro.php', {
+      const response = await fetch('https://chankando-1.onrender.com/otorgar_logro.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -4267,7 +4267,7 @@ async function actualizarPerfilUsuario() {
   const anio = new Date().getFullYear();
 
   try {
-    const response = await fetch("http://127.0.0.1/chankando/actualizar_perfil.php", {
+    const response = await fetch("https://chankando-1.onrender.com/actualizar_perfil.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -4320,7 +4320,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obtener racha desde la base de datos
   (async function cargarRachaDesdeServidor() {
     try {
-      const res = await fetch(`http://127.0.0.1/chankando/obtener_racha.php?usuario_id=${userId}`);
+      const res = await fetch(`https://chankando-1.onrender.com/obtener_racha.php?usuario_id=${userId}`);
       const data = await res.json();
 
       if (data.success) {
@@ -4360,7 +4360,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      await fetch("http://127.0.0.1/chankando/guardar_racha.php", {
+      await fetch("https://chankando-1.onrender.com/guardar_racha.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -4604,7 +4604,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let logrosDesbloqueados = userId ? JSON.parse(localStorage.getItem(`logrosDesbloqueados_${userId}`)) || [] : [];
 
   if (userId) {
-    fetch(`http://127.0.0.1/chankando/obtener_logros.php?usuario_id=${userId}`)
+    fetch(`/obtener_logros.php?usuario_id=${userId}`)
       .then(res => res.json())
       .then(data => {
         logrosDesbloqueados = Array.isArray(data) ? data : [];
@@ -5001,7 +5001,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem(`logrosDesbloqueados_${userId}`, JSON.stringify(logrosDesbloqueados));
       mostrarNotificacionLogro(logro);
 
-      fetch("http://127.0.0.1/chankando/guardar_logro.php", {
+      fetch("https://chankando-1.onrender.com/guardar_logro.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -5166,7 +5166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Obtener eventos desde la base de datos
     let eventos = [];
     try {
-      const res = await fetch(`http://127.0.0.1/chankando/obtener_eventos.php?usuario_id=${userId}`);
+      const res = await fetch(`https://chankando-1.onrender.com/obtener_eventos.php?usuario_id=${userId}`);
       eventos = await res.json();
     } catch (err) {
       console.error("Error cargando eventos para notificaciones:", err);
@@ -6305,7 +6305,7 @@ async function aplicarFiltrosPaginaDinamica() {
     tipo_precio: filtroActual.tipo_precio || 'todos'
   });
 
-  const url = `http://127.0.0.1/chankando/obtener_cursos.php?${params.toString()}`;
+  const url = `https://chankando-1.onrender.com/obtener_cursos.php?${params.toString()}`;
   
   const response = await fetch(url);
   if (!response.ok) {
@@ -6807,7 +6807,7 @@ function mostrarModalContacto(datos) {
                   <p class="text-xs text-gray-500">Disponible para revisión</p>
                 </div>
               </div>
-              <a href="http://127.0.0.1/chankando/ver_cv.php?id=${datos.curso_id}" target="_blank"
+              <a href="https://chankando-1.onrender.com/ver_cv.php?id=${datos.curso_id}" target="_blank"
                 class="bg-white text-[#ff3e00] border-2 border-[#ff3e00] hover:bg-[#ff3e00] hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition duration-300 flex items-center gap-2">
                 Ver PDF
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6991,7 +6991,7 @@ async function enviarCursoAlServidor(data) {
   });
 
   try {
-    const res = await fetch('http://127.0.0.1/chankando/publicar_curso.php', {
+    const res = await fetch('https://chankando-1.onrender.com/publicar_curso.php', {
       method: 'POST',
       body: formData
     });
@@ -7109,7 +7109,7 @@ async function cargarCursos(numPagina = 1) {
   const contenedor = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3');
 
   try {
-    const response = await fetch(`http://127.0.0.1/chankando/obtener_cursos.php?p=${numPagina}`);
+    const response = await fetch(`https://chankando-1.onrender.com/obtener_cursos.php?p=${numPagina}`);
     const data = await response.json();
 
     if (data.success) {
