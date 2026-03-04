@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_progreso.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <section id="progress" class="section-content">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+      <!-- Estadísticas Semanales y Mensuales -->
+      <div class="card-3d">
+        <div class="flex justify-between items-center mb-4">
+          <h3 id="studyTimeTitle" class="text-xl font-semibold font-montserrat text-black">📊 Tiempo de estudio semanal</h3>
+          <div class="flex gap-3">
+            <button id="btnSemanal" class="comicsemanal-button">Semanal</button>
+            <button id="btnMensual" class="comicmensual-button">Mensual</button>
+          </div>
+        </div>
+        <div class="h-64">
+          <canvas id="studyTimeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Tareas Próximas -->
+      <div class="card-3d">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold font-montserrat text-black">📅 Tareas Próximas</h3>
+          <button id="btn-ver-todas" class="comictareas-button">
+            Ver Todas
+          </button>
+        </div>
+
+        <div id="lista-tareas" class="space-y-4 max-h-[230px] overflow-y-auto pr-2">
+          <p class="sin-tareas text-center text-gray-400 text-sm mt-6">No hay tareas por realizar.</p>
+        </div>
+
+        <!-- Botón Añadir -->
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 pb-3">
+          <button id="btn-agregar-tarea" class="button">
+            <span class="button__text">Añadir</span>
+            <span class="button__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                <line y2="19" y1="5" x2="12" x1="12"></line>
+                <line y2="12" y1="12" x2="19" x1="5"></line>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sesiones Completadas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div id="sesiones-completadas" class="bg-white rounded-2xl border-l-custom border-yellow-400 shadow-md px-5 py-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-black flex items-center gap-3">
+            <i class="fas fa-clock text-yellow-500"></i> Sesiones completadas
+          </h3>
+          <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Este mes</span>
+        </div>
+        <div class="text-center mt-4">
+          <span id="contador-sesiones" class="text-4xl font-extrabold text-blue-600">0</span>
+          <div id="porcentaje-sesiones" class="text-sm text-gray-600 mt-1"></div>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-4 italic">Se reinicia automáticamente cada mes.</p>
+      </div>
+
+      <!-- Tiempo Total -->
+      <div id="tiempo-total" class="bg-white rounded-2xl border-l-custom border-blue-400 shadow-md px-5 py-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-black flex items-center gap-3">
+            <i class="fas fa-hourglass-half text-blue-500"></i> Tiempo Total
+          </h3>
+          <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Este mes</span>
+        </div>
+        <div class="text-center mt-4">
+          <span id="contador-tiempo-total" class="text-4xl font-extrabold text-blue-600">0</span>
+          <div id="porcentaje-tiempo" class="text-sm text-gray-600 mt-1"></div>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-4 italic">Basado en sesiones de 25 minutos.</p>
+      </div>
+
+      <!-- Tareas Completadas -->
+      <div id="tareas-completadas" class="bg-white rounded-2xl border-l-custom border-green-400 shadow-md px-5 py-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-black flex items-center gap-3">
+            <i class="fas fa-check-circle text-green-500"></i> Tareas completadas
+          </h3>
+          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Este mes</span>
+        </div>
+        <div class="text-center mt-4">
+          <span id="contador-tareas" class="text-4xl font-extrabold text-blue-600">0</span>
+          <div id="porcentaje-tareas" class="text-sm text-gray-600 mt-1"></div>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-4 italic">Se reinicia automáticamente cada mes.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal Nueva Tarea -->
+<div id="modalTarea" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-md border-2 border-yellow-500">
+    <h2 class="text-2xl font-bold mb-6 text-yellow-600 text-center">📌 Nueva Tarea</h2>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+        <input type="text" id="tareaTitulo" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Título de la tarea">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+        <textarea id="tareaDescripcion" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" rows="3" placeholder="Breve descripción"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de entrega</label>
+        <input type="date" id="tareaFecha" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      </div>
+    </div>
+    <div class="flex justify-end mt-6 gap-2">
+      <button id="cancelarTarea" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Cancelar</button>
+      <button id="guardarTarea" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ver Todas -->
+<div id="modalVerTodas" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white border-l-4 border-yellow-500 rounded-xl shadow-2xl w-[90%] max-w-xl max-h-[500px] overflow-y-auto p-6 relative">
+    
+    <div class="flex justify-between items-center mb-4 border-b pb-3">
+      <h2 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
+        <i class="fas fa-tasks"></i> Todas las Tareas
+      </h2>
+      <button id="cerrarVerTodas" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+    </div>
+
+    <div id="contenedor-todas-tareas" class="space-y-4 min-h-[264px]">
+      <p class="sin-tareas text-center text-gray-400 text-sm mt-6">No hay tareas por realizar.</p>
+    </div>
+    
+    <div class="mt-4 text-center text-xs text-gray-500">
+      ✨ Puedes marcar las tareas como completadas directamente desde aquí.
+    </div>
+  </div>
+</div>
+
+{% endblock %}

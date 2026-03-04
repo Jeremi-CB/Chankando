@@ -1,0 +1,493 @@
+/* Diseño del Botón "Eliminar" apuntes */ 
+.button {
+  --main-focus: #2d8cf0;
+  --font-color: #000000;
+  --bg-color-sub: #2563eb;
+  --bg-color: #3b82f6;
+  --main-color: #000000;
+  position: relative;
+  width: 190px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--main-color);
+  box-shadow: 2px 3px var(--main-color);
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.button, .button__icon, .button__text {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  transform: translateX(33px);
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: var(--bg-color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 20px;
+  fill: var(--main-color);
+}
+
+.button:hover {
+  background: var(--bg-color);
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px var(--main-color);
+}
+
+
+/* Estilos base */
+.notes-container {
+  padding: 1.5rem;
+}
+
+.notes-section {
+  width: 100%;
+}
+
+.notes-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Sidebar - Mis Apuntes */
+.notes-sidebar {
+  width: 100%;
+}
+
+.notes-card, .tags-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #2563eb;
+  transition: box-shadow 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.notes-card:hover, .tags-card:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.notes-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notes-add-btn {
+  color: #2563eb;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notes-add-btn:hover {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  transform: scale(1.1);
+}
+
+.notes-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.notes-search-container {
+  position: relative;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+#notes-search {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  transition: all 0.3s ease;
+}
+
+#notes-search:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.notes-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.notes-view-all {
+  margin-top: 1rem;
+  width: 100%;
+  text-align: left;
+}
+
+/* Diseño del botón "Añadir Tarea" */
+.button-view-all {
+  --main-focus: #2d8cf0;
+  --font-color: #000000;
+  --bg-color-sub: #2563eb;
+  --bg-color: #3b82f6;
+  --main-color: #000000;
+  position: relative;
+  width: 160px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.button-view-all, .button, .button__text {
+  transition: all 0.3s;
+}
+
+.button-view-all .button__text {
+  transform: translateX(25px);
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.button-view-all .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 50px;
+  background-color: var(--bg-color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-view-all .svg {
+  width: 20px;
+  stroke: var(--main-color);
+}
+
+.button-view-all:hover {
+  background: var(--bg-color);
+}
+
+.button-view-all:hover .button__text {
+  color: transparent;
+}
+
+.button-view-all:hover .button__icon {
+  width: 160px;
+  transform: translateX(0);
+}
+
+.button-view-all:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px var(--main-color);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Sección Etiquetas */
+.tags-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.tags-title {
+  font-weight: 600;
+  color: black;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tags-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#add-tag-btn, #delete-tag-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#add-tag-btn {
+  color: #059669;
+}
+
+#delete-tag-btn {
+  color: #dc2626;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Modales */
+.notes-modal, .tags-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 32rem;
+  max-height: 32rem;
+  overflow-y: auto;
+  border-left: 6px solid #2563eb;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #b45309;
+}
+
+#cerrar-todos-notes {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#contenedor-todos-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#tag-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+#tag-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-actions button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#tag-cancel-btn {
+  background-color: #e5e7eb;
+  border: none;
+}
+
+#tag-cancel-btn:hover {
+  background-color: #d1d5db;
+}
+
+#tag-save-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+}
+
+#tag-save-btn:hover {
+  background-color: #0946c9;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .notes-layout {
+    flex-direction: row;
+  }
+  
+  .notes-sidebar {
+    width: 33.333333%;
+  }
+  
+  .notes-editor {
+    width: 66.666667%;
+  }
+}
+
+
+/* Estilos Para las Tarjetas */
+.note-item {
+  display: block;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.note-item:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.note-item.selected {
+  background-color: #f0f9ff; /* Azul muy claro */
+  border-left: 4px solid #3b82f6; /* Azul */
+  border-color: #93c5fd; /* Borde azul claro */
+}
+
+.note-title {
+  font-weight: 600;
+  color: #000000; /* Gris oscuro */
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.note-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  color: #6b7280; /* Gris medio */
+}
+
+.note-tag {
+  color: #1e40af; /* Azul oscuro */
+  font-weight: 500;
+}
+
+.note-time {
+  color: #6b7280; /* Gris medio */
+}
+
+
+
+/* Borde de Editor de apuntes */
+.card-3d {
+  position: relative;
+  border: 4px solid #2563eb;
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 1.5rem; /* p-6 */
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover */
+.card-3d:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* shadow-xl */
+  transform: translateY(-2px);
+}
+
+
+/* Borde de los Contadores */
+.border-l-custom {
+  border-left-width: 6px; 
+}

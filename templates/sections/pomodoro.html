@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_pomodoro.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <section id="pomodoro-section" class="section-content">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-3xl shadow-2xl p-10 mb-10 border-l-8 border-purple-700">
+        <div class="flex flex-col items-center">
+
+          <!-- TIMER -->
+          <div class="pomodoro-timer mb-10 text-center">
+            <div id="timer-display" class="digital-clock">25:00</div>
+            <p id="timer-label" class="text-gray-600 text-lg mt-6 italic">Tiempo de estudio</p>
+          </div>
+
+          <!-- BOTONES DE CONTROL -->
+          <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button id="start-timer" class="comic-button">
+              <i class="fas fa-play mr-2"></i> Iniciar
+            </button>
+            <button id="pause-timer" class="comic-button hidden">
+              <i class="fas fa-pause mr-2"></i> Pausar
+            </button>
+            <button id="reset-timer" class="comic-button">
+              <i class="fas fa-sync-alt mr-2"></i> Reiniciar
+            </button>
+          </div>
+
+          <!-- CONFIGURACIÓN -->
+          <div class="w-full max-w-xl bg-white rounded-xl p-6 shadow-inner border-3 border-purple-700">
+            <h3 class="text-xl font-bold text-black mb-4 flex items-center gap-2">
+              <i class="fas fa-cog"></i> Configuración
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <!-- Estudio -->
+              <div>
+                <label class="block text-sm font-semibold text-purple-700 mb-2">Tiempo de estudio</label>
+                <div class="flex items-center rounded overflow-hidden border border-yellow-300">
+                  <button id="pomodoro-minus" class="px-3 py-1 bg-yellow-100 hover:bg-yellow-200 text-black">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input id="pomodoro-time" type="number" min="25" max="120" value="25" class="w-full text-center py-2 bg-white text-black font-semibold">
+                  <button id="pomodoro-plus" class="px-3 py-1 bg-yellow-100 hover:bg-yellow-200 text-black">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Descanso -->
+              <div>
+                <label class="block text-sm font-semibold text-purple-700 mb-2">Tiempo de descanso</label>
+                <div class="flex items-center rounded overflow-hidden border border-green-300">
+                  <button id="break-minus" class="px-3 py-1 bg-green-100 hover:bg-green-200 text-black">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input id="break-time" type="number" min="5" max="15" value="5" class="w-full text-center py-2 bg-white text-black font-semibold">
+                  <button id="break-plus" class="px-3 py-1 bg-green-100 hover:bg-green-200 text-black">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <input id="auto-start-breaks" type="checkbox" class="mr-2">
+              <label for="auto-start-breaks" class="text-sm text-gray-700">Iniciar descansos automáticamente</label>
+            </div>
+          </div>
+
+          <!-- INFO POMODORO -->
+          <div class="mt-6 text-sm text-gray-900 bg-yellow-100 rounded-xl p-4 w-full max-w-xl">
+            <div class="flex justify-between items-center">
+              <p>
+                <b>⏰ Personaliza tu Pomodoro:</b> Estudio entre <span class="text-yellow-600 font-semibold">25-120 min</span> y descansos de <span class="text-green-600 font-semibold">5-15 min</span>.
+              </p>
+              <button id="pomodoro-info-btn" class="ml-4 px-3 py-1 bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded shadow text-xs flex items-center gap-1">
+                <i class="fas fa-lightbulb"></i> ¿Qué es?
+              </button>
+            </div>
+          </div>
+
+          <!-- MODAL INFO -->
+          <div id="pomodoro-info-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white border-l-custom border-purple-700 rounded-xl shadow-2xl max-w-md w-full p-6 relative animate-fade-in">
+              <button id="close-pomodoro-info" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+              <h3 class="text-xl font-extrabold text-black mb-3 flex items-center gap-2">
+                <i class="fas fa-stopwatch"></i> Técnica Pomodoro
+              </h3>
+              <p class="text-gray-900 leading-relaxed mb-3 text-sm">
+                ¿Te cuesta concentrarte o te abruma estudiar mucho tiempo seguido? <span class="font-semibold text-purple-600">¡La técnica Pomodoro es tu aliada!</span>
+              </p>
+              <ul class="list-disc pl-5 text-sm text-gray-700 mb-4 space-y-1">
+                <li>Estudia <b>25 minutos</b> intensamente (¡sin distracciones!).</li>
+                <li>Toma un <b>descanso corto</b> de 5 a 15 minutos.</li>
+                <li>Repite el ciclo y tras 4 rondas, da un descanso largo.</li>
+              </ul>
+              <div class="bg-yellow-100 border-l-4 border-purple-700 text-gray-800 text-sm p-3 rounded shadow">
+                Ideal para <b>jóvenes y universitarios</b> que quieren mejorar su concentración, evitar el agotamiento y estudiar como un pro. 🎯
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 border-l-8 border-purple-700">
+        <h3 class="text-xl font-bold text-black mb-6">Estadísticas de hoy</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div class="bg-yellow-50 border-l-custom border-yellow-500 rounded-xl p-5 text-center">
+            <div id="today-sessions" class="text-3xl font-bold text-yellow-600 mb-1">0</div>
+            <div class="text-sm text-gray-700">Sesiones completadas</div>
+          </div>
+          <div class="bg-blue-50 border-l-custom border-blue-500 rounded-xl p-5 text-center">
+            <div id="today-total" class="text-3xl font-bold text-blue-600 mb-1">0</div>
+            <div class="text-sm text-gray-700">Tiempo total</div>
+          </div>
+          <div class="bg-green-50 border-l-custom border-green-500 rounded-xl p-5 text-center">
+            <div id="today-average" class="text-3xl font-bold text-green-600 mb-1">0</div>
+            <div class="text-sm text-gray-700">Promedio por sesión</div>
+          </div>
+        </div>
+
+        <h3 class="text-lg font-semibold text-black mb-4">Historial de sesiones</h3>
+        <div class="overflow-x-auto rounded-lg border-2 border-black">
+          <table class="min-w-full text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-2 text-left font-semibold text-black">Fecha</th>
+                <th class="px-4 py-2 text-left font-semibold text-black">Hora</th>
+                <th class="px-4 py-2 text-left font-semibold text-black">Duración</th>
+                <th class="px-4 py-2 text-left font-semibold text-black">Estado</th>
+              </tr>
+            </thead>
+            <tbody id="pomodoro-session-history" class="divide-y divide-gray-200 bg-white">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal historial completo -->
+        <div class="flex justify-end mt-6">
+          <button id="show-full-history" class="comic-button">
+            Ver Historial Completo
+          </button>
+        </div>
+
+        <div id="full-history-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+          <div class="bg-white border-l-custom border-purple-700 rounded-xl shadow-2xl max-w-4xl w-full p-6 relative">
+            <button id="close-full-history" class="absolute top-2 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+            <h3 class="text-xl font-bold text-black mb-4 flex items-center gap-2">
+              <i class="fas fa-history"></i> Historial Completo de Sesiones
+            </h3>
+            <div class="overflow-x-auto max-h-[450px] overflow-y-auto border rounded-lg shadow-inner">
+              <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-50 sticky top-0 z-10">
+                  <tr>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wide">Fecha</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wide">Hora</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wide">Duración</th>
+                    <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wide">Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="pomodoro-full-history" class="bg-white divide-y divide-gray-200">
+                  <!-- Filas dinámicas por JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<aside id="sidebar" class="sidebar bg-white shadow-lg h-screen fixed z-10">
+
+  <div class="p-4 flex justify-between items-center border-b">
+    <div class="flex items-center">
+      <img src="{{ url_for('static', filename='img/logoEscrito.png') }}" alt="Logo" class="h-12 w-auto mr-2">
+    </div>
+  </div>
+  
+  <nav class="mt-2">
+    <ul class="space-y-2 px-4">
+      {% set nav_items = [
+        ('marketplace', 'fas fa-chalkboard-teacher', 'Cursos'),
+        ('progress', 'fas fa-chart-line', 'Progreso'),
+        ('notes', 'fas fa-sticky-note', 'Apuntes'),
+        ('pomodoro', 'fas fa-clock', 'Pomodoro'),
+        ('calendar', 'fas fa-calendar-alt', 'Calendario'),
+        ('achievements', 'fas fa-trophy', 'Logros')
+      ] %}
+
+      {% for section, icon, label in nav_items %}
+      <li>
+        <a href="{{ url_for('show_section', section=section) }}" 
+          class="group flex items-center px-4 py-3 rounded-xl transition-all duration-200 ease-in-out
+          {% if active_section == section %}
+              bg-blue-600 text-white shadow-lg shadow-blue-200
+          {% else %}
+              text-slate-500 hover:bg-blue-50 hover:text-blue-600
+          {% endif %}"
+          data-target="{{ section }}">
+          
+          <div class="flex items-center justify-center w-8">
+            <i class="{{ icon }} text-lg transition-transform duration-200 group-hover:scale-110"></i>
+          </div>
+          
+          <span class="ml-3 font-medium sidebar-text">{{ label }}</span>
+          
+          {% if active_section == section %}
+            <div class="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-sm"></div>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  
+</aside>

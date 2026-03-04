@@ -1,0 +1,562 @@
+/* HORARIO SEMANAL */
+#weekly-schedule {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 5px;
+  background: linear-gradient(145deg, #f9f9ff, #eef2ff);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+#weekly-schedule table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 5px;
+  table-layout: fixed;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#weekly-schedule th,
+#weekly-schedule td {
+  border: 1px solid rgba(204, 204, 204, 0.3);
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#weekly-schedule th {
+  background: #F97316;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#weekly-schedule th:first-child {
+  border-top-left-radius: 8px;
+}
+
+#weekly-schedule th:last-child {
+  border-top-right-radius: 8px;
+}
+
+#weekly-schedule tr:hover td {
+  background: rgba(245, 245, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.schedule-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  margin: 0px;
+  border-radius: 4px;
+  padding: 0px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.schedule-block:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.schedule-block::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+}
+
+#weekly-schedule td,
+.schedule-cell {
+  position: relative;
+  padding: 0 !important;
+  height: 50px;
+  min-width: 90px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+/* Botón flotante mejorado */
+.floating-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  font-size: 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 13, 255, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.floating-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 13, 255, 0.4);
+}
+
+.floating-button::after {
+  content: "+";
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Efectos adicionales para celdas vacías */
+.schedule-cell:empty::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ccc;
+  font-size: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.schedule-cell:hover:empty::after {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #weekly-schedule th,
+  #weekly-schedule td {
+    height: 40px;
+    font-size: 0.8em;
+  }
+  
+  .schedule-block {
+    font-size: 0.7rem;
+  }
+  
+  .floating-button {
+    padding: 14px 20px;
+    font-size: 16px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+
+/* Calendario */
+.fc-toolbar-title {
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  font-size: 2.5rem !important;
+  font-weight: 700;
+  color: #F97316;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  padding: 0.4em 0.8em;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.50);
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+  animation: slideIn 1s ease-out;
+}
+
+.fc-toolbar-title:hover {
+  background: #F97316;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.50);
+}
+
+/* TOOLBAR CON DECORACIÓN */
+.fc-toolbar {
+  display: flex;
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem !important;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.fc-toolbar::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F97316, transparent);
+  animation: shimmer 3s infinite linear;
+}
+
+/* Forzar disposición horizontal de chunks del toolbar */
+.fc-toolbar-chunk {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ajustar tamaño del título para que no ocupe demasiado espacio */
+.fc-toolbar-title {
+  font-size: 1.8rem !important;  /* Reducido de 2.5rem */
+  white-space: nowrap !important;
+  flex-shrink: 1 !important;
+}
+
+/* Responsive mejorado */
+@media (max-width: 1024px) {
+  .fc-toolbar-title {
+    font-size: 1.4rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fc-toolbar-title {
+    font-size: 1.2rem !important;
+    padding: 0.3em 0.6em !important;
+  }
+  
+  .fc-button {
+    padding: 0.4em 0.8em !important;
+    font-size: 0.85rem !important;
+    margin: 0 0.25rem !important;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* BOTONES ANIMADOS */
+.fc-button {
+  background-color: #3182ce; /* azul suave */
+  color: #fff;
+  padding: 0.5em 1.2em;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+@keyframes shine {
+  100% {
+    left: 120%;
+  }
+}
+
+.fc-button-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.fc-button:hover {
+  filter: brightness(1.05);
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 6px 12px rgba(245, 158, 11, 0.2);
+}
+
+.fc-button.fc-button-active {
+  background: #F97316 !important;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(217, 119, 6, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
+  }
+}
+
+/* DIAS CON ESTILO MODERNO */
+.fc-daygrid-day {
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background-color: #fafafa; 
+  border: 1px solid #000000 !important; 
+}
+
+
+.fc-daygrid-day::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(249, 115, 22, 0.05) 100%); 
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fc-daygrid-day:hover::before {
+  opacity: 1;
+}
+
+.fc-daygrid-day-number {
+  font-weight: 600;
+  color: #111111; 
+  padding: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+  font-size: 1.1rem;
+}
+
+.fc-daygrid-day:hover .fc-daygrid-day-number {
+  transform: scale(1.1);
+  color: #F97316;
+}
+
+.fc-day-today {
+  background-color: rgba(249, 115, 22, 0.1) !important; 
+  border: 1px solid #F97316 !important; 
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  color: #F97316;
+  font-weight: 800;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+
+/* EVENTOS */
+.fc-event {
+  background-color: #ffffff !important; 
+  color: #111111 !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border-left: 4px solid #F97316 !important;
+  border: 1px solid #00000033; 
+  position: relative;
+  overflow: hidden;
+  transition: none;
+  box-shadow: none;
+}
+
+/* Efecto de resplandor animado */
+.fc-event::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(249, 115, 22, 0.15),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.fc-event:hover::before {
+  left: 100%;
+}
+
+/* VISTA LISTA MEJORADA */
+.fc-list-day-cushion {
+  background: linear-gradient(to right, #1a1a1a, #2c2c2c) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem !important;
+  border-left: 5px solid #f97316 !important;
+  border-radius: 8px 0 0 8px;
+  transition: background 0.4s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.fc-list-day-cushion:hover {
+  transform: translateX(6px);
+  background: linear-gradient(to right, #2c2c2c, #3b3b3b) !important;
+}
+
+.fc-list-event {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+  border-left: 4px solid #f97316 !important;
+  padding: 12px 16px !important;
+  border-radius: 10px;
+  margin: 8px 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.fc-list-event:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fc-list-event-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #f97316; 
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fc-list-event-time {
+  font-size: 0.875rem;
+  color: #555555;
+  min-width: 70px;
+}
+
+.fc-list-event-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* DECORACIÓN ADICIONAL */
+.fc-col-header-cell {
+  background: linear-gradient(to bottom, #111111, #333333) !important; /* Degradado negro */
+  color: #ffffff !important; /* Texto blanco */
+  font-weight: 600 !important;
+  padding: 10px 0 !important;
+  border: none !important;
+}
+
+.fc-col-header-cell:hover {
+  background: linear-gradient(to bottom, #333333, #555555) !important;
+}
+
+.fc-view-harness {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  background: white;
+  position: relative;
+}
+
+.fc-view-harness::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.03) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.03) 0%, transparent 50%); /* Efecto de luz naranja sutil */
+}
+
+.fc-list-event-dot {
+  border-color: #F97316 !important;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+
+/* Borde de los Contadores */
+.border-l-custom {
+  border-left-width: 6px; 
+}
+
+
+/* Diseño de botón "Añadri Evento" y "Añadir Clase" */
+.comic-button {
+  display: inline-block;
+  padding: 8px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #F97316;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.comic-button:hover {
+  background-color: #fff;
+  color: #F97316;
+  border: 2px solid #F97316;
+  box-shadow: 5px 5px 0px #F97316;
+}
+
+.comic-button:active {
+  background-color: white;
+  box-shadow: none;
+  transform: translateY(4px);
+}

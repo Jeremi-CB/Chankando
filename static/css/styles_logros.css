@@ -1,0 +1,344 @@
+/* Borde de los Contadores */
+.border-l-custom {
+  border-left-width: 7px; 
+}
+
+
+/* Contenedor principal */
+.streak-container {
+  position: relative;
+  border-radius: 1.5rem;
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.streak-container:hover {
+  transform: translateY(-5px) rotateX(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación del ícono de fuego mejorada */
+@keyframes fireFlicker {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+    filter: drop-shadow(0 0 5px rgba(255, 100, 0, 0.7));
+  }
+  25% { 
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.9));
+  }
+  50% { 
+    transform: scale(0.95) rotate(5deg);
+    filter: drop-shadow(0 0 4px rgba(255, 80, 0, 0.5));
+  }
+  75% { 
+    transform: scale(1.1) rotate(-3deg);
+    filter: drop-shadow(0 0 7px rgba(255, 120, 0, 0.8));
+  }
+}
+
+.animate-fire {
+  animation: fireFlicker 1.5s infinite ease-in-out;
+}
+
+/* Partículas de fuego */
+.flame-particle {
+  width: 6px;
+  height: 6px;
+  background-color: #ff8c00;
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: floatUp 2s infinite ease-in-out;
+}
+
+.flame-particle:nth-child(1) {
+  top: -5px;
+  left: 5px;
+  animation-delay: 0.3s;
+}
+
+.flame-particle:nth-child(2) {
+  top: -8px;
+  right: 5px;
+  animation-delay: 0.7s;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-20px) scale(0.5); opacity: 0; }
+}
+
+/* Burbujas de días mejoradas */
+.streak-bubble {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.streak-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Día completado - Efecto premium */
+.streak-bubble.completed {
+  background: radial-gradient(circle at 65% 35%, #3b82f6 0%, #2563eb 70%);
+  color: white;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.streak-bubble.completed::before {
+  content: "✓";
+  font-size: 1.1rem;
+  font-weight: bold;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.streak-bubble.completed::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.05); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+/* Día fallido - Efecto mejorado */
+.streak-bubble.missed {
+  background-color: #f9fafb;
+  color: #d1d5db;
+  position: relative;
+  overflow: hidden;
+}
+
+.streak-bubble.missed::before {
+  content: "✕";
+  font-size: 1.1rem;
+  font-weight: bold;
+  animation: popIn 0.4s ease;
+}
+
+.streak-bubble.missed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #d1d5db;
+  transform: rotate(-45deg);
+}
+
+/* Animación del contador */
+#streak-counter.rising {
+  animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.7) translateY(20px); opacity: 0; }
+  50% { transform: scale(1.3) translateY(-10px); }
+  80% { transform: scale(0.95); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Efecto de brillo para rachas largas */
+#streak-counter.glow {
+  position: relative;
+  animation: glowPulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { 
+    text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    transform: scale(1);
+  }
+  to { 
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 
+                 0 0 30px rgba(59, 130, 246, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+/* Efecto de confeti */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  opacity: 0;
+  animation: confettiFall 3s ease-in-out forwards;
+}
+
+@keyframes confettiFall {
+  0% { 
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(500px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Badge de nivel */
+.badge.streak-level {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Texto con gradiente */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Partículas flotantes */
+.particle {
+  width: 100px;
+  height: 100px;
+  animation: floatParticle 15s infinite linear;
+}
+
+.particle:nth-child(1) {
+  top: 20%;
+  left: -30px;
+  animation-delay: 0s;
+  animation-duration: 20s;
+}
+
+.particle:nth-child(2) {
+  top: 60%;
+  right: -20px;
+  animation-delay: 5s;
+  animation-duration: 25s;
+}
+
+.particle:nth-child(3) {
+  bottom: -30px;
+  left: 40%;
+  animation-delay: 10s;
+  animation-duration: 15s;
+}
+
+@keyframes floatParticle {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.2; }
+  90% { opacity: 0.2; }
+  100% { transform: translate(100px, -100px) rotate(360deg); opacity: 0; }
+}
+
+/* Contador de días mejorado */
+.streak-number {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  line-height: 1;
+  padding: 0 5px;
+  margin: 0 30px;
+  display: inline-block;
+}
+
+.streak-glow {
+  transition: all 0.5s ease;
+}
+
+.streak-container:hover .streak-glow {
+  opacity: 40%;
+}
+
+/* Animación cuando aumenta el contador */
+#streak-counter.rising {
+  animation: numberPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes numberPop {
+  0% { 
+    transform: scale(0.8) translateY(10px);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: scale(1.15) translateY(-5px);
+  }
+  100% { 
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Efecto para rachas largas */
+#streak-counter.glow {
+  position: relative;
+}
+
+#streak-counter.glow::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  z-index: -1;
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+
+/* DISEÑO PARA EL CONTENEDOR "PRÓXIMO LOGRO" */
+@keyframes bounceTrophy {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.animate-bounce-trophy {
+  animation: bounceTrophy 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.03); opacity: 0.9; }
+}
+.animate-pulse-slow {
+  animation: pulseSlow 4s ease-in-out infinite;
+}

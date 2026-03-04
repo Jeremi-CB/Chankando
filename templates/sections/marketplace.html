@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_cursos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <section id="marketplace" class="section-content">
+    <div class="mb-4 bg-white rounded-lg shadow p-4">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex-1 min-w-[250px]">
+          <div class="relative w-full">
+            <input type="text" name="text" class="input w-full h-12 pl-4 pr-10 rounded-lg border-2 border-gray-300 focus:border-[#ff3e00] focus:ring-0 focus:outline-none transition" placeholder="Buscar curso...">
+            <span class="icon absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div id="grupo-filtros-estudiante" class="flex flex-wrap gap-3">
+          <div class="dropdown custom-orange-dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Asignaturas <i class="ms-2 dropdown-arrow"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">Todos</a></li>
+              <li><a class="dropdown-item" href="#">Matemática</a></li>
+              <li><a class="dropdown-item" href="#">Comunicación</a></li>
+              <li><a class="dropdown-item" href="#">Ingles</a></li>
+              <li><a class="dropdown-item" href="#">Química</a></li>
+              <li><a class="dropdown-item" href="#">Física</a></li>
+              <li><a class="dropdown-item" href="#">Biología</a></li>
+            </ul>
+          </div>
+
+          <div class="dropdown custom-orange-dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+              Nivel <i class="ms-2 dropdown-arrow"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item" href="#">Todos</a></li>
+              <li><a class="dropdown-item" href="#">Secundaria</a></li>
+              <li><a class="dropdown-item" href="#">Preuniversitaria</a></li>
+              <li><a class="dropdown-item" href="#">Universitaria</a></li>
+            </ul>
+          </div>
+
+          <div class="dropdown custom-orange-dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+              Tipo de precio <i class="ms-2 dropdown-arrow"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+              <li><a class="dropdown-item tipo-precio-option" data-tipo="todos" href="#">Todos</a></li>
+              <li><a class="dropdown-item tipo-precio-option" data-tipo="Por hora" href="#">Por hora</a></li>
+              <li><a class="dropdown-item tipo-precio-option" data-tipo="Curso completo" href="#">Curso completo</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="grupo-boton-profesor" class="hidden">
+          <button class="flex items-center gap-3 bg-[#ff3e00] text-white font-bold py-2 px-6 rounded-xl shadow-md transition-all h-12 border-none" onclick="abrirFormularioDocente()">
+            <i class="fas fa-plus-circle text-lg"></i>
+            <span>Publicar Nuevo Curso</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    </div>
+    
+    <!-- Pagination -->
+    <div class="mt-10 flex justify-center">
+      <nav class="pagination flex items-center justify-center gap-2 mt-6 select-none">
+        <button class="pagination-btn" aria-label="Anterior">
+          &larr;
+        </button>
+
+        <button class="pagination-btn active">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <span class="pagination-ellipsis">...</span>
+        <button class="pagination-btn">8</button>
+
+        <button class="pagination-btn" aria-label="Siguiente">
+          &rarr;
+        </button>
+      </nav>
+    </div>
+  </section>
+</div>
+{% endblock %}

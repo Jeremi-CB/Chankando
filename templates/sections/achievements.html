@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_logros.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <section id="achievements-section" class="section-content space-y-6">
+
+    <!-- FILA: Próximo logro + Racha -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Próximo logro -->
+      <div class="bg-white rounded-2xl border-l-custom border-yellow-400 shadow-xl p-6 hover:shadow-2xl transition duration-300 relative overflow-hidden group">
+        <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-yellow-100 rounded-full blur-3xl opacity-30 group-hover:opacity-40 transition duration-500"></div>
+        
+        <h2 class="text-xl font-extrabold text-black mb-4 flex items-center gap-2">
+          <i class="fas fa-trophy animate-bounce-trophy text-yellow-500"></i> Próximo logro a desbloquear
+        </h2>
+
+        <div id="next-achievement" class="flex items-center gap-6 p-4 rounded-xl border-yellow-400 border-l-custom bg-yellow-50/40 shadow-inner w-full transition-all duration-300">
+          <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-3xl shadow-md border border-yellow-300">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="flex-1">
+            <h4 id="next-achievement-title" class="font-bold text-lg text-gray-800 mb-1">Mi primer paso</h4>
+            <p id="next-achievement-desc" class="text-sm text-gray-600 mb-1">Realiza tu primera sesión Pomodoro.</p>
+            <div class="text-xs text-gray-500 font-medium">
+              Progreso: 0/1
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Racha de estudio - Versión Refinada -->
+      <div class="bg-white rounded-2xl border-l-custom border-blue-600 shadow-2xl p-6 hover:shadow-3xl transition-all duration-500 relative overflow-hidden group streak-container">
+        <!-- Efecto de partículas sutiles -->
+        <div class="absolute inset-0 overflow-hidden">
+          <div class="particle absolute rounded-full bg-blue-100 opacity-10"></div>
+        </div>
+        
+        <!-- Efecto de luminosidad -->
+        <div class="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full blur-3xl opacity-15 group-hover:opacity-25 transition duration-700"></div>
+        
+        <!-- Encabezado -->
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3">
+          <span class="fire-icon relative">
+            <i class="fas fa-fire text-orange-500 animate-fire"></i>
+            <span class="flame-particle absolute"></span>
+          </span>
+          <span class="text-black bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            Racha de Estudio
+          </span>
+        </h2>
+
+        <!-- Contenido principal -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <!-- Contador mejorado -->
+          <div class="flex flex-col items-center justify-center relative">
+            <div class="streak-counter-container relative">
+              <div id="streak-counter" class="text-7xl font-black text-blue-600 drop-shadow-md transition-all duration-500 streak-number">
+                0
+              </div>
+              <div class="streak-glow absolute inset-0 rounded-full bg-blue-100 opacity-0 group-hover:opacity-20 blur-md -z-10 transition duration-300"></div>
+            </div>
+          </div>
+
+          <!-- Burbujas de días -->
+          <div class="flex flex-col items-center flex-1">
+            <div class="streak-calendar relative">
+              <div class="flex gap-2 mb-2" id="streak-bubbles">
+                <div class="streak-bubble" data-dia="0" title="Lunes"></div>
+                <div class="streak-bubble" data-dia="1" title="Martes"></div>
+                <div class="streak-bubble" data-dia="2" title="Miércoles"></div>
+                <div class="streak-bubble" data-dia="3" title="Jueves"></div>
+                <div class="streak-bubble" data-dia="4" title="Viernes"></div>
+                <div class="streak-bubble" data-dia="5" title="Sábado"></div>
+                <div class="streak-bubble" data-dia="6" title="Domingo"></div>
+              </div>
+              <div class="flex justify-between w-full px-1">
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">L</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">M</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">Mi</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">J</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">V</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">S</span>
+                <span class="text-xs font-medium text-gray-400 w-8 text-center">D</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje motivacional (sin barra) -->
+        <p class="text-sm font-medium text-gray-600 mt-6 leading-relaxed streak-message text-center sm:text-left">
+          ✅ Completa sesiones Pomodoro de <span class="font-semibold text-gray-800">lunes a sábado</span> para mantener tu racha. <span class="font-bold text-blue-600">¡Domigo opcional!</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Logros desbloqueados -->
+    <div class="bg-white rounded-2xl shadow-xl border-l-custom border-green-600 p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-black flex items-center gap-2">
+          <i class="fas fa-unlock"></i> Logros desbloqueados
+        </h2>
+      </div>
+      <div id="logros-desbloqueados" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+      </div>
+    </div>
+
+    <!-- Logros bloqueados -->
+    <div class="bg-white rounded-2xl shadow-xl border-l-custom border-gray-500 p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-black flex items-center gap-2">
+          <i class="fas fa-lock"></i> Logros bloqueados
+        </h2>
+      </div>
+      <div id="logros-bloqueados" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- Llenado dinámico -->
+      </div>
+    </div>
+
+    <!-- Modal de logros completos -->
+    <div id="modal-logros" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+      <div class="bg-white rounded-xl shadow-lg w-[90%] max-w-3xl max-h-[90vh] overflow-y-auto p-6 relative border-l-4 border-yellow-500 animate-fade-in">
+        <h2 class="text-xl font-bold text-yellow-600 mb-4">Todos los logros</h2>
+        <div id="contenedor-logros-completo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- Se llenará dinámicamente -->
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+{% endblock %}

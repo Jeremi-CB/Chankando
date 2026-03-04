@@ -1,0 +1,53 @@
+@import url('https://fonts.cdnfonts.com/css/digital-numbers');
+
+
+/* Diseño de botones */
+.comic-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #7e22ce;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.comic-button:hover {
+  background-color: #fff;
+  color: #7e22ce;
+  border: 2px solid #7e22ce;
+  box-shadow: 5px 5px 0px #7e22ce;
+}
+
+.comic-button:active {
+  background-color: white;
+  box-shadow: none;
+  transform: translateY(4px);
+}
+
+
+/* Estilos Para el Temporizador Digital */
+#timer-display.digital-clock {
+  font-family: 'Digital Numbers', sans-serif;
+  font-size: 70px;
+  color: white;
+  background: #7e22ce;
+  padding: 10px 30px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  letter-spacing: 8px;
+  box-shadow: 0 0 24px #2e2e2e;
+  display: inline-block;
+}
+
+
+/* Borde de los Contadores */
+.border-l-custom {
+  border-left-width: 6px; 
+}

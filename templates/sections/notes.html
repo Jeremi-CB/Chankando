@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_notas.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <section id="notes" class="section-content">
+    <div class="flex flex-col md:flex-row gap-6">
+
+      <!-- Mis Apuntes -->
+      <div class="notes-sidebar" id="notes-list-container">
+        <div class="notes-card">
+          <div class="notes-header">
+            <h3 class="notes-title">
+              <i class="fas fa-book"></i> Mis apuntes
+            </h3>
+            <button class="notes-add-btn" id="new-note-btn">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
+          <div class="notes-search-container">
+            <input type="text" placeholder="Buscar apuntes..." id="notes-search">
+            <i class="fas fa-search notes-search-icon"></i>
+          </div>
+          <ul class="notes-list" id="notes-list">
+          </ul>
+          <div class="notes-view-all">
+            <button id="btn-ver-todos-notes" class="button-view-all">
+              <span class="button__text"> Ver más</span>
+              <span class="button__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                  <line y2="19" y1="5" x2="12" x1="12"></line>
+                  <line y2="12" y1="12" x2="19" x1="5"></line>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sección Etiquetas -->
+        <div class="tags-card">
+          <div class="tags-header">
+            <span class="tags-title">
+              <i class="fas fa-tags"></i> Etiquetas
+            </span>
+            <div class="tags-actions">
+              <button id="add-tag-btn" title="Agregar etiqueta">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <button id="delete-tag-btn" title="Eliminar etiqueta">
+                <i class="fas fa-minus-circle"></i>
+              </button>
+            </div>
+          </div>
+          <div class="tags-list" id="tag-chips">
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor de Apuntes -->
+      <div class="w-full md:w-3/4">
+        <div class="card-3d">
+          <div class="flex justify-between items-center mb-6">
+            <div class="w-full">
+              <input
+                type="text"
+                id="note-title"
+                placeholder="Título del apunte"
+                class="text-2xl font-extrabold text-black placeholder-gray-400 border-0 focus:outline-none focus:ring-0 w-full"
+              >
+              <div class="flex items-center text-sm text-gray-500 mt-1">
+                <span id="note-date">Creado: --/--/----</span>
+                <span class="mx-2">•</span>
+                <select
+                  id="note-tag"
+                  class="text-sm bg-yellow-100 text-yellow-800 font-semibold px-2 py-1 rounded focus:outline-none"
+                >
+                </select>
+              </div>
+            </div>
+            <button id="delete-note" type="button" class="button">
+              <span class="button__text">Borrar</span>
+              <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="512" viewBox="0 0 512 512" height="512" class="svg"><title></title><path style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" d="M112,112l20,320c.95,18.49,14.4,32,32,32H348c17.67,0,30.87-13.51,32-32l20-320"></path><line y2="112" y1="112" x2="432" x1="80" style="stroke:#323232;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"></line><path style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" d="M192,112V72h0a23.93,23.93,0,0,1,24-24h80a23.93,23.93,0,0,1,24,24h0v40"></path><line y2="400" y1="176" x2="256" x1="256" style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></line><line y2="400" y1="176" x2="192" x1="184" style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></line><line y2="400" y1="176" x2="320" x1="328" style="fill:none;stroke:#323232;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></line></svg></span>
+            </button>
+          </div>
+
+          <div id="editor-container" class="relative">
+            <div class="absolute -top-4 left-4 bg-white px-2 text-sm text-black font-semibold z-10">
+              ✍ Editor de Apuntes
+            </div>
+            <textarea
+              id="markdown-editor"
+              placeholder="Escribe tu apunte aquí..."
+              class="w-full h-[320px] bg-gray-50 border-2 border-blue-600 focus:border-blue-700 focus:ring-2 focus:ring-blue-200 rounded-lg p-4 shadow-inner text-gray-800 font-mono text-sm resize-y transition-all duration-300"
+            ></textarea>
+
+            <!-- CONTADOR DE PALABRAS -->
+            <div id="word-counter" class="absolute -bottom-6 right-2 text-xs text-gray-500 bg-white px-2 py-1 rounded">
+              Palabras: <span id="word-count">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal apuntes -->
+<div id="modal-ver-todos-notes" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-xl shadow-lg w-[90%] max-w-xl max-h-[500px] overflow-y-auto p-6 border-l-custom border-blue-600">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-black">Todos los Apuntes</h2>
+      <button id="cerrar-todos-notes" class="text-gray-500 hover:text-gray-800 text-xl font-bold">&times;</button>
+    </div>
+    <ul id="contenedor-todos-notes" class="space-y-3">
+    </ul>
+  </div>
+</div>
+
+<!-- Modal Etiquetas -->
+<div id="tag-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-80 border-4 border-blue-600">
+    <h3 class="text-lg font-bold text-black mb-4" id="tag-modal-title">Etiqueta nueva</h3>
+    <input type="text" id="tag-input" class="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Nombre de la etiqueta">
+    <div class="flex justify-end gap-2">
+      <button id="tag-cancel-btn" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300">Cancelar</button>
+      <button id="tag-save-btn" class="px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">Guardar</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

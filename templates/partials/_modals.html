@@ -1,0 +1,211 @@
+<!-- Modal Login -->
+<div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center hidden animate__animated animate__fadeIn">
+  <div class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-8 max-w-md w-full relative overflow-hidden border border-white/20 animate__animated animate__zoomIn">
+    
+    <div class="absolute -top-16 -right-16 w-48 h-48 bg-blue-400/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-purple-400/10 rounded-full blur-3xl"></div>
+    
+    <div class="relative z-10 text-center mb-10">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-50 rounded-2xl mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Bienvenido</h2>
+      <p class="text-slate-500 mt-2 font-medium">Inicia sesión para entrar a Chankando</p>
+      
+      <button class="absolute -top-4 -right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all duration-300" onclick="toggleLoginModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <form class="relative z-10 space-y-6">
+      <div>
+        <label class="block text-slate-700 text-sm font-bold mb-2 ml-1" for="email">Correo electrónico</label>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-700 leading-tight focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all duration-300 placeholder:text-slate-400" 
+                 id="email" type="email" placeholder="tu@ejemplo.com">
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex justify-between items-center mb-2 ml-1">
+          <label class="text-slate-700 text-sm font-bold" for="password">Contraseña</label>
+          <a href="javascript:void(0)" onclick="openForgotPassword()" class="text-[13px] font-semibold text-blue-600 hover:underline">¿La Olvidaste?</a>
+        </div>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-blue-500 transition-colors">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input id="password" type="password" placeholder="••••••••" 
+                class="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all">
+          <button type="button" onclick="togglePasswordVisibility('password', this)" 
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-blue-600 transition-colors">
+            <i class="fas fa-eye text-xs"></i>
+          </button>
+        </div>
+      </div>
+      
+      <button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-2xl shadow-xl shadow-slate-200 transform active:scale-[0.98] transition-all duration-200 flex items-center justify-center space-x-2" 
+              type="button" onclick="loginUser()">
+        <span>Entrar a mi cuenta</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </button>
+
+      <div class="flex items-center my-6">
+        <div class="flex-grow border-t border-slate-100"></div>
+        <span class="px-3 text-slate-400 text-xs font-medium uppercase tracking-widest">O</span>
+        <div class="flex-grow border-t border-slate-100"></div>
+      </div>
+      
+      <p class="text-center text-slate-600 font-medium">
+        ¿Eres nuevo aquí? 
+        <a class="text-blue-600 font-bold hover:text-blue-800 transition-colors cursor-pointer" onclick="toggleRegisterModal()">
+          Crea una cuenta
+        </a>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+<!-- Modal Registro -->
+<div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center hidden animate__animated animate__fadeIn">
+  <div class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-8 max-w-md w-full relative overflow-hidden border border-white/20 animate__animated animate__zoomIn">
+    
+    <div class="absolute -top-16 -right-16 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-teal-400/10 rounded-full blur-3xl"></div>
+    
+    <div class="relative z-10 text-center mb-6">
+      <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Crea tu cuenta</h2>
+      <p class="text-slate-500 mt-1 text-sm font-medium">Únete a la comunidad de Chankando</p>
+      
+      <button class="absolute -top-2 -right-2 p-2 text-slate-400 hover:text-slate-600 transition-all" onclick="toggleRegisterModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <form class="relative z-10 space-y-4">
+      <div>
+        <label class="block text-slate-700 text-xs font-bold mb-1.5 ml-1">Nombre de usuario</label>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+            <i class="fas fa-user text-sm"></i>
+          </span>
+          <input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all" 
+                 id="reg-name" type="text" placeholder="Tu nombre completo">
+        </div>
+      </div>
+      
+      <div>
+        <label class="block text-slate-700 text-xs font-bold mb-1.5 ml-1">Correo electrónico</label>
+        <div class="relative group">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+            <i class="fas fa-envelope text-sm"></i>
+          </span>
+          <input class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all" 
+                 id="reg-email" type="email" placeholder="estudiante@ejemplo.com">
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-slate-700 text-xs font-bold mb-1.5 ml-1">Contraseña</label>
+                  <div class="relative">
+            <input id="reg-password" type="password" placeholder="••••••••" 
+                  class="w-full pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all">
+            <button type="button" onclick="togglePasswordVisibility('reg-password', this)" 
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-emerald-600 transition-colors">
+              <i class="fas fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-700 text-xs font-bold mb-1.5 ml-1">Confirmar</label>
+          <input class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all" 
+                 id="reg-confirm-password" type="password" placeholder="••••••••">
+        </div>
+      </div>
+      
+      <div>
+        <label class="block text-slate-700 text-xs font-bold mb-3 ml-1">¿Quién eres?</label>
+        <div class="flex p-1 bg-slate-100 rounded-2xl">
+          <label class="flex-1">
+            <input type="radio" name="reg-role" value="student" class="hidden peer" checked>
+            <div class="text-center py-2 text-sm font-semibold rounded-xl cursor-pointer transition-all peer-checked:bg-white peer-checked:text-emerald-600 peer-checked:shadow-sm text-slate-500">
+              Estudiante
+            </div>
+          </label>
+          <label class="flex-1">
+            <input type="radio" name="reg-role" value="teacher" class="hidden peer">
+            <div class="text-center py-2 text-sm font-semibold rounded-xl cursor-pointer transition-all peer-checked:bg-white peer-checked:text-emerald-600 peer-checked:shadow-sm text-slate-500">
+              Profesor
+            </div>
+          </label>
+        </div>
+      </div>
+      
+      <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-100 transform active:scale-[0.98] transition-all duration-200 flex items-center justify-center space-x-2 mt-2" 
+              type="button" onclick="registerUser()">
+        <span>Crear mi cuenta</span>
+        <i class="fas fa-rocket text-xs"></i>
+      </button>
+
+      <p class="text-center text-slate-500 text-xs font-medium pt-2">
+        ¿Ya eres parte? 
+        <a class="text-emerald-600 font-bold hover:underline cursor-pointer" onclick="toggleLoginModal()">
+          Inicia sesión aquí
+        </a>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+<!-- Modal Olvidé Contraseña -->
+<div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[60] flex items-center justify-center hidden animate__animated animate__fadeIn">
+  <div class="bg-white rounded-[2rem] shadow-2xl p-8 max-w-sm w-full h-[550px] relative overflow-hidden flex flex-col border border-white/20">
+    
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-purple-400/10 rounded-full blur-2xl"></div>
+
+    <div class="relative z-10 text-center mt-4">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-50 rounded-2xl mb-4">
+        <i class="fas fa-envelope-open-text text-blue-600 text-2xl"></i>
+      </div>
+      <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">¿Olvidaste tu acceso?</h2>
+    </div>
+
+    <div class="relative z-10 flex-grow flex flex-col justify-center text-center px-2">
+      <p class="text-slate-600 text-sm leading-relaxed mb-6">
+        Para recuperar tu cuenta, por favor envía un correo electrónico a:
+      </p>
+      
+      <div class="bg-slate-50 border border-slate-100 rounded-2xl py-4 px-2 mb-6">
+        <span class="text-blue-600 font-bold text-base block mb-1">chankandoayuda@gmail.com</span>
+        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Correo de Soporte</span>
+      </div>
+
+      <p class="text-slate-500 text-xs leading-relaxed italic">
+        Indica en el mensaje que olvidaste tu contraseña del correo con el que te registraste en <span class="font-bold text-slate-700">Chankando</span>. 
+        Nos pondremos en contacto contigo a la brevedad posible por ese mismo medio.
+      </p>
+    </div>
+
+    <div class="relative z-10 pt-4 mt-auto">
+      <button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow-lg transform active:scale-[0.97] transition-all text-sm" 
+              onclick="closeRecoveryAndBackToLogin()">
+        Entendido, volver al inicio
+      </button>
+    </div>
+  </div>
+</div>
